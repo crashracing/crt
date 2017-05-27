@@ -1,0 +1,24 @@
+---
+# tasks file for crashracing.ubuntu.nogui
+- name: remove unused packages
+  apt:
+      name: "{{ item }}"
+      state: absent
+      purge: yes
+  with_items:
+      - mate-desktop
+      - xserver-xorg
+      - xserver-xorg-core
+      - fonts-noto-cjk
+      - mate-backgrounds
+      - mate-icon-theme
+      - pidgin
+      - snapd
+      - scratch
+      - nuscratch
+      - thunderbird
+      - sbcl
+      - libreoffice-core
+      - firefox
+      - mate-icon-theme-faenza
+      - modemmanager

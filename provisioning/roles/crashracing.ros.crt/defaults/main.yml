@@ -1,0 +1,6 @@
+---
+# defaults file for crashracing.ros.crt
+ros_user: ubuntu
+crt_base: /vagrant
+crt_repo: /vagrant
+crt_install: no

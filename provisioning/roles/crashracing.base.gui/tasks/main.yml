@@ -1,0 +1,10 @@
+---
+# tasks file for crashracing.base.gui
+- name: install nice GUI packages
+  apt: >
+    update_cache=yes
+    state=present
+    name={{item}}
+  with_items:
+    - qtcreator
+    - meld

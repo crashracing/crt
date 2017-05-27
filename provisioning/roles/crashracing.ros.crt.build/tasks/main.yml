@@ -1,0 +1,8 @@
+---
+# tasks file for crashracing.ros.crt.build
+- name: compile CRT-ROS
+  command: zsh -c "source ~/.zshrc.local && rm -rf build devel && catkin_make -j1"
+  args:
+    chdir: /vagrant/crt/crt-ros
+  become: true
+  become_user: ubuntu

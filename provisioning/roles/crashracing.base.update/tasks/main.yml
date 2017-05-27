@@ -1,0 +1,9 @@
+---
+# tasks file for crashracing.base.update
+- name: Update and dist-upgrade
+  apt: >
+    cache_valid_time=3600
+    update_cache=yes
+    upgrade=dist
+    autoremove=yes
+    

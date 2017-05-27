@@ -1,0 +1,9 @@
+---
+# tasks file for crashracing.base.xfce
+- name: install nice GUI packages
+  apt: >
+    update_cache=yes
+    state=present
+    name={{item}}
+  with_items:
+    - xubuntu-core

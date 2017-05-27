@@ -1,0 +1,52 @@
+---
+# tasks file for crashracing.ros.crt
+- name: add ROS vars to ~/.zshrc.local
+  blockinfile:
+    dest: "~{{ ros_user }}/.zshrc.local"
+    marker: "# {mark} Sourcing packages in CRT workspace"
+    content: |
+      export CRT_SETUP_ZSH={{crt_repo}}/crt-ros/devel/setup.zsh
+      [ -e $CRT_SETUP_ZSH ] && source $CRT_SETUP_ZSH || true
+    state: present
+    create: true
+    insertafter: EOF
+  become: no
+
+- name: configuring Git
+  command: "{{ item }}"
+  become: true
+  become_user: "{{ ros_user }}"
+  with_items:
+    - git config --global alias.ci commit
+    - git config --global alias.st status
+    - git config --global color.ui auto
+    - git config --global credential.helper store
+    - git config --global push.default simple
+
+- name: install nice packages
+  apt: >
+    cache_valid_time=3600
+    state=present
+    name={{item}}
+  with_items:
+    - dfu-util
+    - ros-kinetic-rosbash
+
+- name: Update rosdep database (user)
+  command: rosdep update
+  become: true
+  become_user: "{{ ros_user }}"
+
+- name: create directory for CRT repository
+  file: path="{{crt_base}}" state=directory owner="{{ ros_user }}" group="{{ ros_user }}" mode=0755
+
+- name: install CRT-ROS dependencies
+  command: bash -c "source /opt/ros/kinetic/setup.bash && rosdep -y install --from-paths src --ignore-src --rosdistro kinetic -r -q"
+  args:
+    chdir: "{{crt_repo}}/crt-ros"
+  when: crt_install == "yes"
+
+# TODO:
+# - copy udev rules
+# - copy getID for hokuyo
+# - cronjob: * *     * * *           /sbin/iwconfig wlan0 power off

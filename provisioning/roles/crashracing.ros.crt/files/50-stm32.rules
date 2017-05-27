@@ -1,0 +1,6 @@
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", \
+    MODE:="0666", \
+        SYMLINK+="stlinkv2_%n"
+
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="664", GROUP="plugdev"
+

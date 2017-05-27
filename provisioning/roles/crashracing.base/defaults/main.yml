@@ -1,0 +1,5 @@
+---
+# defaults file for crashracing.base
+
+# unprivileged user for SSH login
+ros_user: ubuntu

@@ -1,0 +1,12 @@
+---
+# tasks file for crashracing.base.vagrant
+- name: install packages
+  apt: >
+    cache_valid_time=3600
+    state=latest
+    name={{item}}
+  with_items:
+    - ansible
+    - vagrant
+    - virtualbox
+

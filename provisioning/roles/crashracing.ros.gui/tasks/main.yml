@@ -1,0 +1,10 @@
+---
+# tasks file for crashracing.ros.gui
+- name: install ROS GUI packages
+  apt:
+      cache_valid_time: 3600
+      update_cache: yes
+      state: present
+      name: "ros-{{ros_release}}-{{item}}"
+  with_items:
+    - desktop-full

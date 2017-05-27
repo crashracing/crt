@@ -1,0 +1,6 @@
+---
+# this playbooks sets up the developer VM
+- hosts: all
+  roles:
+    - crashracing.base
+    - crashracing.base.vagrant

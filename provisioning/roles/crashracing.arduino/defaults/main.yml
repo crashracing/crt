@@ -1,0 +1,6 @@
+---
+# defaults file for crashracing.arduino
+arduino_version: arduino-1.8.2
+arduino_archive: "{{ arduino_version }}-linux64.tar.xz"
+arduino_checksum: sha256:f1d4b6a70473930ab33f5b7d416c1b56148ef2ea5fbb78d1ede9feb84c941b88
+

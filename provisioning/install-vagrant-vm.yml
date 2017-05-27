@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - ansible-role-ros
+    - role: ansible-role-keyboard
+      keyboard_model: pc105
+      keyboard_layout: de
+    - crashracing.base
+    - crashracing.base.gui
+    - crashracing.ros.crt
+    - crashracing.ros.gui
+    - crashracing.ubuntu.gui
+    - crashracing.base.update
+    - crashracing.arduino

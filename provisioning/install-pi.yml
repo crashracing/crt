@@ -1,0 +1,10 @@
+---
+# this playbooks sets up the Raspberry Pi 3
+- hosts: all
+  roles:
+    - ansible-role-ros
+    - crashracing.ubuntu.nogui
+    - crashracing.base
+    - role: crashracing.ros.crt
+      crt_install: yes
+    - crashracing.turag.debugserver

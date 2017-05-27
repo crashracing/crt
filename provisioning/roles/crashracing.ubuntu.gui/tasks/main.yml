@@ -1,0 +1,55 @@
+---
+# disable screensaver stuff from: https://github.com/GR360RY/ansible-role-kodi-client/blob/master/tasks/main.yml
+- name: Make sure ~/.config/autostart directory is available
+  file: state=directory dest={{ item }} owner={{ ros_user }} group={{ ros_user }} mode=0700
+  with_items:
+    - "~{{ ros_user }}/.config/"
+    - "~{{ ros_user }}/.config/autostart/"
+
+- name: Add script to disable screensaver
+  copy: src=disable_screensaver dest=/usr/bin/disable_screensaver owner=root group=root mode=0755
+
+- name: Disable screensaver both in Unity and Xserver on user login
+  copy: src=disable_screensaver.desktop dest=~{{ ros_user }}/.config/autostart/disable_screensaver.desktop owner={{ ros_user }} group={{ ros_user }} mode=0664
+
+- name: remove problematic packages
+  apt:
+      name: "{{ item }}"
+      state: absent
+      purge: yes
+      autoremove: yes
+  with_items:
+      - ros-kinetic-librealsense
+
+# xubuntu + extras
+- name: install new packages
+  apt:
+      name: "{{ item }}"
+      state: present
+      cache_valid_time: 3600
+  with_items:
+    - xubuntu-core
+    - virtualbox-guest-utils
+    - virtualbox-guest-x11
+    - yakuake
+    - firefox
+
+- name: remove unused packages
+  apt:
+      name: "{{ item }}"
+      state: absent
+      purge: yes
+  with_items:
+      - mate-desktop
+      - mate-backgrounds
+      - mate-icon-theme
+      - pidgin
+      - snapd
+      - scratch
+      - nuscratch
+      - thunderbird
+      - sbcl
+      - libreoffice-core
+      - mate-icon-theme-faenza
+      - modemmanager
+      - avahi-daemon

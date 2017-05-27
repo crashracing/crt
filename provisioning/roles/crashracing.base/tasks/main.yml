@@ -1,0 +1,40 @@
+---
+# tasks file for crashracing.base
+- name: install nice packages
+  apt: >
+    cache_valid_time=3600
+    state=present
+    name={{item}}
+  with_items:
+    - zsh
+    - screen
+    - htop
+    - ifstat
+    - vim
+    - aptitude
+    - arping
+    - qalc
+    - git
+    - python
+    - unp
+    - bind9-host
+    - tree
+    - whois
+    - g++
+
+- name: copy dotfiles
+  copy:
+    src: "{{item}}"
+    dest: "~{{ ros_user }}/"
+    owner: "{{ ros_user }}"
+    group: "{{ ros_user }}"
+    mode: 0644
+  with_fileglob:
+    - .*
+
+- name: set user shell to zsh
+  user:
+    name: "{{ ros_user }}"
+    shell: /bin/zsh
+    groups: dialout
+    append: yes

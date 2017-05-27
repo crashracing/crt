@@ -1,0 +1,8 @@
+[submodule "crt-arduino"]
+	path = crt-arduino
+	url = git@github.com:crashracing/crt-arduino
+	branch = master
+[submodule "crt-ros"]
+	path = crt-ros
+	url = git@github.com:crashracing/crt-ros
+	branch = master

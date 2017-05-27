@@ -1,0 +1,19 @@
+---
+# Currently supported ROS releases:
+# - "groovy" on Ubuntu "precise"
+# - "hydro"  on Ubuntu "precise"
+# - "indigo" on Ubuntu "trusty"
+# - "kinetic" on Ubuntu "xenial"
+ros_release: "kinetic"
+ros_package: "ros-base"
+
+# Optionally use a mirror for the ROS packages
+ros_apt_uri: "http://packages.ros.org/ros/ubuntu"
+ros_apt_key: "https://raw.githubusercontent.com/ros/rosdistro/master/ros.key"
+
+# Set to present to just guarantee that ROS is installed
+# Set to latest to guarantee the latest version is installed
+ros_installation_type: present
+
+# unprivileged user for SSH login
+ros_user: ubuntu

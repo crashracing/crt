@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Arduino
+Comment=
+Exec=/home/ubuntu/local/bin/arduino
+Icon=text-x-arduino
+Path=/vagrant/crt-arduino
+Terminal=false
+StartupNotify=true

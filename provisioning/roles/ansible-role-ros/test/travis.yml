@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ansible-role-ros
+  vars:
+    # Force ROS Groovy since Travis CI runs on Ubuntu 12.04
+    ros_release: groovy

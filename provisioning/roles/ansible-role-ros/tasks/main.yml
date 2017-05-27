@@ -1,0 +1,43 @@
+---
+- name: ROS repository apt-key
+  apt_key:
+    url: "{{ ros_apt_key }}"
+    state: present
+
+- name: ROS deb repository
+  apt_repository:
+    repo: "deb {{ ros_apt_uri }} {{ ansible_lsb.codename }} main"
+    state: present
+
+- name: Desired ROS configuration
+  apt:
+    pkg: "ros-{{ ros_release }}-{{ ros_package }}"
+    state: "{{ ros_installation_type }}"
+
+- name: Check status of rosdep source database
+  stat:
+    path: "/etc/ros/rosdep/sources.list.d"
+    get_md5: no
+    get_checksum: no
+  register: rosdep_database
+
+- name: Initialize rosdep database
+  command: /usr/bin/rosdep init
+  when: not rosdep_database.stat.exists
+
+- name: Update rosdep database
+  command: /usr/bin/rosdep update
+  when: not rosdep_database.stat.exists
+
+- name: "Sourcing of ROS setup script in {{ item.shell_rc }}"
+  blockinfile:
+    dest: "~{{ ros_user }}/{{ item.shell_rc }}"
+    marker: "# {mark} Sourcing ROS environment setup script for {{ item.shell_name }}"
+    content: |
+      source /opt/ros/{{ ros_release }}/setup.{{ item.shell_name }}
+    state: present
+    create: true
+  with_items:
+    - { shell_name: bash, shell_rc: ".bashrc" }
+    - { shell_name: zsh, shell_rc: ".zshrc.local" }
+  become: no

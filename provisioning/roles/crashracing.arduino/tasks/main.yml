@@ -1,0 +1,29 @@
+---
+# tasks file for crashracing.arduino
+- name: create ~/Downloads dir
+  file: path=~{{ ros_user }}/Downloads state=directory owner={{ ros_user }} group={{ ros_user }} mode=0755
+
+- name: create ~/local dir
+  file: path=~{{ ros_user }}/local state=directory owner={{ ros_user }} group={{ ros_user }} mode=0755
+
+- name: create ~/local/bin dir
+  file: path=~{{ ros_user }}/local/bin state=directory owner={{ ros_user }} group={{ ros_user }} mode=0755
+
+- name: download Arduino IDE
+  get_url:
+    url: "https://downloads.arduino.cc/{{ arduino_archive }}"
+    dest: "~{{ ros_user }}/Downloads"
+    checksum: "{{ arduino_checksum }}"
+  become: true
+  become_user: "{{ ros_user }}"
+
+- name: unpack Arduino IDE
+  unarchive:
+    src: "~{{ ros_user }}/Downloads/{{ arduino_archive }}"
+    dest: "~{{ ros_user }}/local"
+    remote_src: True
+
+- name: setup arduino symlink
+  file: path=~{{ ros_user }}/local/bin/arduino
+    src=~{{ ros_user }}/local/{{ arduino_version }}/arduino
+    state=link
